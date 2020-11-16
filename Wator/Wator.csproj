@@ -132,6 +132,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Advanced\Animal.cs" />
+    <Compile Include="Advanced\AdvancedWatorWorld.cs" />
+    <Compile Include="Advanced\Fish.cs" />
+    <Compile Include="Advanced\Shark.cs" />
+    <Compile Include="Beginner\Animal.cs" />
+    <Compile Include="Beginner\Fish.cs" />
+    <Compile Include="Beginner\BeginnerWatorWorld.cs" />
+    <Compile Include="Beginner\Shark.cs" />
     <Compile Include="Dialogs\AnalysisDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +166,10 @@
     <Compile Include="Original\Shark.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pro\ProWatorWorld.cs" />
+    <Compile Include="Pro\Animal.cs" />
+    <Compile Include="Pro\Fish.cs" />
+    <Compile Include="Pro\Shark.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Version.cs" />
   </ItemGroup>
