@@ -7,6 +7,7 @@ namespace VPS.Wator {
     OriginalWatorWorld,
     BeginnerWatorWorld,
     AdvancedWatorWorld,
-    ProWatorWorld
+    ProWatorWorld,
+    ParallelWatorWorld
   }
 }

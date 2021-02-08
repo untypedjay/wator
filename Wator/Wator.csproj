@@ -164,6 +164,10 @@
     <Compile Include="Original\Fish.cs" />
     <Compile Include="Original\OriginalWatorWorld.cs" />
     <Compile Include="Original\Shark.cs" />
+    <Compile Include="Parallel\Animal.cs" />
+    <Compile Include="Parallel\Fish.cs" />
+    <Compile Include="Parallel\ParallelWatorWorld.cs" />
+    <Compile Include="Parallel\Shark.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pro\ProWatorWorld.cs" />

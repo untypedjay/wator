@@ -44,7 +44,7 @@ namespace VPS.Wator {
     #endregion
 
     public Settings() {
-      Version = Version.ProWatorWorld;
+      Version = Version.ParallelWatorWorld;
       Workers = 1;
       Runs = 5;
       Iterations = 100;
