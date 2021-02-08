@@ -50,7 +50,7 @@ namespace VPS.Wator {
       Iterations = 100;
       Width = 500;
       Height = 500;
-      DisplayWorld = false;
+      DisplayWorld = true;
       DisplayInterval = 1;
       InitialFishPopulation = 20000;
       InitialFishEnergy = 10;

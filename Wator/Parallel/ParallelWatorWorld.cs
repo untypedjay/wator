@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace VPS.Wator.Parallel
 {
@@ -15,6 +17,8 @@ namespace VPS.Wator.Parallel
 
         // for visualization
         private byte[] rgbValues;
+
+        private const int BLOCK_SIZE = 4;
 
         #region Properties
         public int Width { get; private set; }  // width (number of cells) of the world
@@ -91,8 +95,56 @@ namespace VPS.Wator.Parallel
             RandomizeMatrix(randomMatrix);  // make sure that order of execution of cells is different and random in each time step
 
             // process all animals in random order
+            int remainder = Width % BLOCK_SIZE;
+            var tasks = new List<Task>();
+
+            tasks.Add(ProcessOddAsync());
+            tasks.Add(ProcessEvenAsync());
+            tasks.Add(ProcessAsync(Width - remainder, Width));
+
+            Task.WhenAll(tasks).ContinueWith(t =>
+            {
+                // commit all animals in the grid to prepare for the next simulation step
+                for (int i = 0; i < Width; i++)
+                {
+                    for (int j = 0; j < Height; j++)
+                    {
+                        Grid[i, j]?.Commit();
+                    }
+                }
+            });
+        }
+
+        private void ProcessOdd()
+        {
+            for (int i = 0; i < Width - BLOCK_SIZE; i = i + (BLOCK_SIZE * 2))
+            {
+                Process(i, i + BLOCK_SIZE);
+            }
+        }
+
+        private Task ProcessOddAsync()
+        {
+            return Task.Factory.StartNew(() => ProcessOdd());
+        }
+
+        private void ProcessEven()
+        {
+            for (int i = BLOCK_SIZE - 1; i < Width - BLOCK_SIZE; i = i + (BLOCK_SIZE * 2))
+            {
+                Process(i, i + BLOCK_SIZE);
+            }
+        }
+
+        private Task ProcessEvenAsync()
+        {
+            return Task.Factory.StartNew(() => ProcessEven());
+        }
+
+        private void Process(int startIndex, int endIndex)
+        {
             int row, col;
-            for (int i = 0; i < Width; i++)
+            for (int i = startIndex; i < endIndex; i++)
             {
                 for (int j = 0; j < Height; j++)
                 {
@@ -104,15 +156,11 @@ namespace VPS.Wator.Parallel
                         Grid[col, row].ExecuteStep();
                 }
             }
+        }
 
-            // commit all animals in the grid to prepare for the next simulation step
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    Grid[i, j]?.Commit();
-                }
-            }
+        private Task ProcessAsync(int startIndex, int endIndex)
+        {
+            return Task.Factory.StartNew(() => Process(startIndex, endIndex));
         }
 
         // generate bitmap for the current state of the Wator world
